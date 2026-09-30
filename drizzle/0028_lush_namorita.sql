@@ -1,0 +1,2 @@
+CREATE INDEX `production_batches_project_status_number` ON `production_batches` (`project_id`,`status`,`batch_number`);--> statement-breakpoint
+CREATE INDEX `performance_project_batch_captured` ON `social_performance_snapshots` (`project_id`,`batch_id`,`captured_at`);

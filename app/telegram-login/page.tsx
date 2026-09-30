@@ -1,0 +1,4 @@
+"use client";
+import{useEffect,useState}from"react";
+import LanguageSwitch from"../language-switch";
+export default function TelegramLoginResult(){const[status,setStatus]=useState("checking"),[member,setMember]=useState("");useEffect(()=>{const params=new URLSearchParams(window.location.search);setStatus(params.get("status")||"error");setMember(params.get("member")||"")},[]);return <main className="telegram-login-result"><div className="standalone-language"><LanguageSwitch/></div><section><span className="brand-mark">F</span><p>FRAMEFLOW MEMBER IDENTITY</p><h1>{status==="success"?"Telegram login verified":"Telegram login unavailable"}</h1><p>{status==="success"?`${member} is now linked to a verified Telegram identity. No Project permission or task action was granted.`:"The Telegram identity could not be verified or this member is not ready to link."}</p><a href="/">Return to FrameFlow</a></section></main>}

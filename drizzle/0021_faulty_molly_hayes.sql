@@ -1,0 +1,1 @@
+ALTER TABLE `publishing_records` ADD `provider_container_id` text;

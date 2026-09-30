@@ -1,0 +1,48 @@
+{
+  "name": "ai-content-production-manager",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "install:ci": "bash scripts/install-ci.sh",
+    "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vite",
+    "build": "bash scripts/build-verified.sh",
+    "build:cloudflare": "npm run build && node scripts/prepare-cloudflare-config.mjs",
+    "deploy:cloudflare": "wrangler deploy --config .cloudflare/wrangler.jsonc",
+    "db:migrate:cloudflare": "wrangler d1 migrations apply DB --remote --config .cloudflare/wrangler.jsonc",
+    "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
+    "test": "npm run build && node --experimental-strip-types --test tests/cloudflare-deployment.test.mjs tests/autopost-dormant.test.mjs tests/production-readiness.test.mjs tests/provider-json.test.mjs tests/content-production-recovery.test.mjs tests/image-generation-retry.test.mjs tests/visual-prompt-architecture.test.mjs tests/reel-image-to-video.test.mjs tests/memory-layer.test.mjs tests/rendered-html.test.mjs tests/tiktok-oauth.test.mjs tests/facebook-oauth.test.mjs tests/social-scheduling-platforms.test.mjs tests/runninghub-connector.test.mjs tests/runninghub-upscaler.test.mjs tests/runninghub-qwen-image.test.mjs tests/batch-performance-learning.test.mjs tests/operational-status.test.mjs tests/interface-v3.test.mjs",
+    "validate:artifact": "bash scripts/validate-artifact.sh",
+    "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next",
+    "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate",
+    "db:generate:baseline": "bash scripts/sites-env.sh -- drizzle-kit generate --config db/baseline.drizzle.config.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.2",
+    "next": "16.2.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.37.1",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.26",
+    "drizzle-kit": "0.31.10",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.6",
+    "react-server-dom-webpack": "19.2.6",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vinext": "0.0.50",
+    "vite": "8.0.13",
+    "wrangler": "4.92.0"
+  },
+  "type": "module",
+  "displayName": "AI Content Production Manager"
+}

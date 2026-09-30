@@ -1,0 +1,7 @@
+export const DEFAULT_PROJECT_TIMEZONE="Asia/Kuala_Lumpur";
+
+function parts(value:Date,timeZone:string){const values:Record<string,string>={};for(const part of new Intl.DateTimeFormat("en-CA",{timeZone,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(value))if(part.type!=="literal")values[part.type]=part.value;return values}
+export function projectTimezone(project:any){return String(project?.projectConfig?.timezone||DEFAULT_PROJECT_TIMEZONE)}
+export function timezoneInputValue(value:string,timeZone:string){const time=Date.parse(value||"");if(!Number.isFinite(time))return"";const p=parts(new Date(time),timeZone);return`${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}`}
+export function timezoneInputToUtc(value:string,timeZone:string){const match=value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/);if(!match)return"";const target=Date.UTC(Number(match[1]),Number(match[2])-1,Number(match[3]),Number(match[4]),Number(match[5]));let guess=target;for(let i=0;i<3;i++){const p=parts(new Date(guess),timeZone),shown=Date.UTC(Number(p.year),Number(p.month)-1,Number(p.day),Number(p.hour),Number(p.minute));guess+=target-shown}return new Date(guess).toISOString()}
+export function formatProjectDateTime(value:string,timeZone:string){const time=Date.parse(value||"");return Number.isFinite(time)?new Intl.DateTimeFormat("en-MY",{timeZone,day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:true,timeZoneName:"short"}).format(new Date(time)):""}

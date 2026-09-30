@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1788338924416,
+      "tag": "0000_frameflow_canonical",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1788341403651,
+      "tag": "0001_batch_learning_approval_gate",
+      "breakpoints": true
+    }
+  ]
+}
